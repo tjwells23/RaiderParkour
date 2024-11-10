@@ -1,4 +1,0 @@
-repository "Parkour Raiders@Parkour_Raiders@cloud"
-  path "/"
-    br "/main"
-    co "/main"
