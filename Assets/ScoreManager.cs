@@ -31,9 +31,9 @@ public class ScoreManager : MonoBehaviour
 
     }
 
-    public void addScore(int points)
+    public void addScore(int distance)
     {
-        playerScore += points;
+        playerScore = distance;
         UpdateScoreDisplay();
 
         if (playerScore > highScore)

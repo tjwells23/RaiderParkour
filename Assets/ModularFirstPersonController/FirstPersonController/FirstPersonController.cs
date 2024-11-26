@@ -19,6 +19,9 @@ using UnityEngine.SceneManagement;
 public class FirstPersonController : MonoBehaviour
 {
     private Rigidbody rb;
+    private Vector3 startPosition; // Starting position for tracking distance
+    private float maxForwardZ = 0; // Tracks the farthest forward progress
+    private bool isTrackingDistance = false; // Flag to ensure tracking starts only once
     public ScoreManager scoreManager;
 
     #region Camera Movement Variables
@@ -365,6 +368,25 @@ public class FirstPersonController : MonoBehaviour
         {
             HeadBob();
         }
+
+        if (isTrackingDistance)
+        {
+            // Check the player's current Z position relative to the starting position
+            float currentForwardZ = transform.position.z;
+
+            // If the player has advanced farther than the maxForwardZ, update the score
+            if (currentForwardZ > maxForwardZ)
+            {
+                // Update the maximum forward progress
+                maxForwardZ = currentForwardZ;
+
+                // Calculate the forward distance traveled relative to the starting position
+                float forwardDistance = maxForwardZ - startPosition.z;
+
+                // Update the score
+                ScoreManager.Instance.addScore(Mathf.RoundToInt(forwardDistance));
+            }
+        }
     }
 
     void FixedUpdate()
@@ -532,11 +554,15 @@ public class FirstPersonController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Course1"))
+        if (collision.gameObject.CompareTag("Course1") && !isTrackingDistance)
         {
-            Debug.Log("This is a message in the Unity Console!");
-            // Add 5 points whenever the player lands on a platform.
-            ScoreManager.Instance.addScore(5);
+            Debug.Log("Distance tracking started!");
+
+            // Start tracking distance
+            isTrackingDistance = true;
+            startPosition = transform.position;
+
+            Debug.Log("Starting position: " + startPosition);
         }
     }
 }
