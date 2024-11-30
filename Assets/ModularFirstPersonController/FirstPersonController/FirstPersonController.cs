@@ -564,6 +564,12 @@ public class FirstPersonController : MonoBehaviour
 
             Debug.Log("Starting position: " + startPosition);
         }
+
+        if (collision.gameObject.CompareTag("Pit"))
+        {
+            Debug.Log("You lose!");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 }
 
