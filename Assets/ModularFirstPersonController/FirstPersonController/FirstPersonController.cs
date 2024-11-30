@@ -23,6 +23,7 @@ public class FirstPersonController : MonoBehaviour
     private float maxForwardZ = 0; // Tracks the farthest forward progress
     private bool isTrackingDistance = false; // Flag to ensure tracking starts only once
     public ScoreManager scoreManager;
+    public resetPlayer resetPlayer;
 
     #region Camera Movement Variables
 
@@ -160,6 +161,7 @@ public class FirstPersonController : MonoBehaviour
         if(lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         if(crosshair)
@@ -332,7 +334,7 @@ public class FirstPersonController : MonoBehaviour
         #region Jump
 
         // Gets input and calls jump method
-        if(enableJump && Input.GetKeyDown(jumpKey) && isGrounded)
+        if(enableJump && playerCanMove && Input.GetKeyDown(jumpKey) && isGrounded)
         {
             Jump();
         }
@@ -343,17 +345,17 @@ public class FirstPersonController : MonoBehaviour
 
         if (enableCrouch)
         {
-            if(Input.GetKeyDown(crouchKey) && !holdToCrouch)
+            if(enableCrouch && playerCanMove && Input.GetKeyDown(crouchKey) && !holdToCrouch)
             {
                 Crouch();
             }
             
-            if(Input.GetKeyDown(crouchKey) && holdToCrouch)
+            if(enableCrouch && playerCanMove && Input.GetKeyDown(crouchKey) && holdToCrouch)
             {
                 isCrouched = false;
                 Crouch();
             }
-            else if(Input.GetKeyUp(crouchKey) && holdToCrouch)
+            else if(enableCrouch && playerCanMove && Input.GetKeyUp(crouchKey) && holdToCrouch)
             {
                 isCrouched = true;
                 Crouch();
@@ -364,7 +366,7 @@ public class FirstPersonController : MonoBehaviour
 
         CheckGround();
 
-        if(enableHeadBob)
+        if(enableHeadBob && playerCanMove)
         {
             HeadBob();
         }
@@ -556,19 +558,27 @@ public class FirstPersonController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Course1") && !isTrackingDistance)
         {
-            Debug.Log("Distance tracking started!");
+            //Debug.Log("Distance tracking started!");
 
             // Start tracking distance
             isTrackingDistance = true;
             startPosition = transform.position;
 
-            Debug.Log("Starting position: " + startPosition);
+            //Debug.Log("Starting position: " + startPosition);
         }
 
         if (collision.gameObject.CompareTag("Pit"))
         {
-            Debug.Log("You lose!");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //Debug.Log("You lose!");
+
+            playerCanMove = false;
+            cameraCanMove = false;
+
+            // Unlock the cursor for UI interaction
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            resetPlayer.Instance.showGameOverScreen();
         }
     }
 }

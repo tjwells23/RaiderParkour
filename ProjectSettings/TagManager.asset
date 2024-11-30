@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Course1
   - Pit
+  - GameOver
   layers:
   - Default
   - TransparentFX
