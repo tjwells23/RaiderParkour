@@ -16,6 +16,9 @@ using UnityEngine.UI;
 
 public class FirstPersonController : MonoBehaviour
 {
+    public AudioSource audioSrc;
+    public AudioClip audioClip1;
+
     private Rigidbody rb;
 
     #region Camera Movement Variables
@@ -466,6 +469,9 @@ public class FirstPersonController : MonoBehaviour
         {
             rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
             isGrounded = false;
+            audioSrc.clip = audioClip1;
+            audioSrc.Play();
+            Debug.Log("dipesh was here");
         }
 
         // When crouched and using toggle system, will uncrouch for a jump
@@ -560,10 +566,13 @@ public class FirstPersonController : MonoBehaviour
         GUILayout.Label("Camera Setup", new GUIStyle(GUI.skin.label) { alignment = TextAnchor.MiddleCenter, fontStyle = FontStyle.Bold, fontSize = 13 }, GUILayout.ExpandWidth(true));
         EditorGUILayout.Space();
 
+        
         fpc.playerCamera = (Camera)EditorGUILayout.ObjectField(new GUIContent("Camera", "Camera attached to the controller."), fpc.playerCamera, typeof(Camera), true);
+        fpc.audioSrc = (AudioSource)EditorGUILayout.ObjectField(new GUIContent("Audio Source", "Audio source"), fpc.audioSrc, typeof(AudioSource), true);
+        fpc.audioClip1 = (AudioClip)EditorGUILayout.ObjectField(new GUIContent("Audio Clip1", "Audio source"), fpc.audioClip1, typeof(AudioClip), true);
         fpc.fov = EditorGUILayout.Slider(new GUIContent("Field of View", "The camera’s view angle. Changes the player camera directly."), fpc.fov, fpc.zoomFOV, 179f);
         fpc.cameraCanMove = EditorGUILayout.ToggleLeft(new GUIContent("Enable Camera Rotation", "Determines if the camera is allowed to move."), fpc.cameraCanMove);
-
+       
         GUI.enabled = fpc.cameraCanMove;
         fpc.invertCamera = EditorGUILayout.ToggleLeft(new GUIContent("Invert Camera Rotation", "Inverts the up and down movement of the camera."), fpc.invertCamera);
         fpc.mouseSensitivity = EditorGUILayout.Slider(new GUIContent("Look Sensitivity", "Determines how sensitive the mouse movement is."), fpc.mouseSensitivity, .1f, 10f);

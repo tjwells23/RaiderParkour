@@ -1,14 +1,5 @@
 fileFormatVersion: 2
 guid: d90ba6530d9bfda47abb4610956b2f44
-MonoImporter:
-  externalObjects: {}
-  serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
-  icon: {instanceID: 0}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
   productId: 189884
@@ -16,3 +7,19 @@ AssetOrigin:
   packageVersion: 1.0.1
   assetPath: Assets/ModularFirstPersonController/FirstPersonController/FirstPersonController.cs
   uploadId: 428261
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - playerCamera: {instanceID: 0}
+  - crosshairImage: {instanceID: 0}
+  - sprintBarBG: {instanceID: 0}
+  - sprintBar: {instanceID: 0}
+  - joint: {instanceID: 0}
+  - audioSrc: {fileID: 7710334504309790277, guid: 39669873e351a45099854bb575d130f3, type: 3}
+  - audioClip1: {fileID: 8300000, guid: 34bf32dbfd8be40e78c2fd7c06bca26d, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
