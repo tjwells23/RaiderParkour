@@ -418,6 +418,14 @@ public class FirstPersonController : MonoBehaviour
             // All movement calculations while walking
             else
             {
+                movePlayerXYDirection(targetVelocity);
+            }
+        }
+
+        #endregion
+    }
+
+    public void movePlayerXYDirection(Vector3 targetVelocity) {
                 isSprinting = false;
 
                 if (hideBarWhenFull && sprintRemaining == sprintDuration)
@@ -435,10 +443,6 @@ public class FirstPersonController : MonoBehaviour
                 velocityChange.y = 0;
 
                 rb.AddForce(velocityChange, ForceMode.VelocityChange);
-            }
-        }
-
-        #endregion
     }
 
     // Sets isGrounded based on a raycast sent straigth down from the player object
@@ -459,7 +463,7 @@ public class FirstPersonController : MonoBehaviour
         }
     }
 
-    private void Jump()
+    public void Jump()
     {
         // Adds force to the player rigidbody to jump
         if (isGrounded)
