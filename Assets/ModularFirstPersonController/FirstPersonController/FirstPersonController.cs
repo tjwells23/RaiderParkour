@@ -212,18 +212,10 @@ public class FirstPersonController : MonoBehaviour
 
     float camRotation;
 
-    private void checkGameOver() {
-        Debug.Log(transform.position.y);
-        if (transform.position.y < 20 && !isGameOver) {
-            isGameOver = true;
-            audioSrc.clip = audioClip4;
-            audioSrc.Play();
-        }
-    }
+
 
     private void Update()
     {
-        checkGameOver();
         #region Camera
 
         // Control camera movement
