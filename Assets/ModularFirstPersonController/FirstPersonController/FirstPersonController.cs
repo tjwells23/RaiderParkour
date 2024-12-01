@@ -138,9 +138,9 @@ public class FirstPersonController : MonoBehaviour
         crosshairObject = GetComponentInChildren<Image>();
 
         // Set internal variables
-        playerCamera.fieldOfView = fov;
+        // playerCamera.fieldOfView = fov;
         originalScale = transform.localScale;
-        jointOriginalPos = joint.localPosition;
+        // jointOriginalPos = joint.localPosition;
 
         if (!unlimitedSprint)
         {
@@ -158,8 +158,8 @@ public class FirstPersonController : MonoBehaviour
 
         if(crosshair)
         {
-            crosshairObject.sprite = crosshairImage;
-            crosshairObject.color = crosshairColor;
+            // crosshairObject.sprite = crosshairImage;
+            // crosshairObject.color = crosshairColor;
         }
         else
         {
@@ -172,8 +172,8 @@ public class FirstPersonController : MonoBehaviour
 
         if(useSprintBar)
         {
-            sprintBarBG.gameObject.SetActive(true);
-            sprintBar.gameObject.SetActive(true);
+            // sprintBarBG.gameObject.SetActive(true);
+            // sprintBar.gameObject.SetActive(true);
 
             float screenWidth = Screen.width;
             float screenHeight = Screen.height;
@@ -181,12 +181,12 @@ public class FirstPersonController : MonoBehaviour
             sprintBarWidth = screenWidth * sprintBarWidthPercent;
             sprintBarHeight = screenHeight * sprintBarHeightPercent;
 
-            sprintBarBG.rectTransform.sizeDelta = new Vector3(sprintBarWidth, sprintBarHeight, 0f);
-            sprintBar.rectTransform.sizeDelta = new Vector3(sprintBarWidth - 2, sprintBarHeight - 2, 0f);
+            // sprintBarBG.rectTransform.sizeDelta = new Vector3(sprintBarWidth, sprintBarHeight, 0f);
+            // sprintBar.rectTransform.sizeDelta = new Vector3(sprintBarWidth - 2, sprintBarHeight - 2, 0f);
 
             if(hideBarWhenFull)
             {
-                sprintBarCG.alpha = 0;
+                // sprintBarCG.alpha = 0;
             }
         }
         else
@@ -223,7 +223,7 @@ public class FirstPersonController : MonoBehaviour
             pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
 
             transform.localEulerAngles = new Vector3(0, yaw, 0);
-            playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+            // playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
         }
 
         #region Camera Zoom
@@ -265,7 +265,7 @@ public class FirstPersonController : MonoBehaviour
             }
             else if(!isZoomed && !isSprinting)
             {
-                playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, fov, zoomStepTime * Time.deltaTime);
+                // playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, fov, zoomStepTime * Time.deltaTime);
             }
         }
 
@@ -317,7 +317,7 @@ public class FirstPersonController : MonoBehaviour
             if(useSprintBar && !unlimitedSprint)
             {
                 float sprintRemainingPercent = sprintRemaining / sprintDuration;
-                sprintBar.transform.localScale = new Vector3(sprintRemainingPercent, 1f, 1f);
+                // sprintBar.transform.localScale = new Vector3(sprintRemainingPercent, 1f, 1f);
             }
         }
 
@@ -360,7 +360,7 @@ public class FirstPersonController : MonoBehaviour
 
         if(enableHeadBob)
         {
-            HeadBob();
+            // HeadBob();
         }
     }
 
@@ -422,7 +422,7 @@ public class FirstPersonController : MonoBehaviour
 
                 if (hideBarWhenFull && sprintRemaining == sprintDuration)
                 {
-                    sprintBarCG.alpha -= 3 * Time.deltaTime;
+                    // sprintBarCG.alpha -= 3 * Time.deltaTime;
                 }
 
                 targetVelocity = transform.TransformDirection(targetVelocity) * walkSpeed;
@@ -523,7 +523,7 @@ public class FirstPersonController : MonoBehaviour
         {
             // Resets when play stops moving
             timer = 0;
-            joint.localPosition = new Vector3(Mathf.Lerp(joint.localPosition.x, jointOriginalPos.x, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.y, jointOriginalPos.y, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.z, jointOriginalPos.z, Time.deltaTime * bobSpeed));
+            // joint.localPosition = new Vector3(Mathf.Lerp(joint.localPosition.x, jointOriginalPos.x, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.y, jointOriginalPos.y, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.z, jointOriginalPos.z, Time.deltaTime * bobSpeed));
         }
     }
 }

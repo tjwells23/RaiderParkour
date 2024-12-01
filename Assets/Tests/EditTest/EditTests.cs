@@ -14,13 +14,3 @@ public class DirectionTests
 }
 
 
-public class CameraLookTest
-{
-    
-    [Test]
-    public void XYPositionTest()
-    {
-      Assert.AreEqual(1, 1);
-    }
-}
-
