@@ -8,9 +8,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mono.Cecil.Cil;
+
 
 #if UNITY_EDITOR
-    using UnityEditor;
+using UnityEditor;
     using System.Net;
 #endif
 
@@ -20,6 +22,7 @@ public class FirstPersonController : MonoBehaviour
     public AudioClip audioClip1;
     public AudioClip audioClip2;
     public AudioClip audioClip3;
+    public AudioClip audioClip4;
 
     private Rigidbody rb;
 
@@ -134,6 +137,8 @@ public class FirstPersonController : MonoBehaviour
     private Vector3 jointOriginalPos;
     private float timer = 0;
 
+    private bool isGameOver = false;
+
     private bool walkSoundEnabled = true;
 
     #endregion
@@ -207,8 +212,18 @@ public class FirstPersonController : MonoBehaviour
 
     float camRotation;
 
+    private void checkGameOver() {
+        Debug.Log(transform.position.y);
+        if (transform.position.y < 20 && !isGameOver) {
+            isGameOver = true;
+            audioSrc.clip = audioClip4;
+            audioSrc.Play();
+        }
+    }
+
     private void Update()
     {
+        checkGameOver();
         #region Camera
 
         // Control camera movement
@@ -587,6 +602,7 @@ public class FirstPersonController : MonoBehaviour
         fpc.audioClip1 = (AudioClip)EditorGUILayout.ObjectField(new GUIContent("Audio Clip1", "Audio source for jump"), fpc.audioClip1, typeof(AudioClip), true);
         fpc.audioClip2 = (AudioClip)EditorGUILayout.ObjectField(new GUIContent("Audio Clip2", "Audio source for steps"), fpc.audioClip2, typeof(AudioClip), true);
         fpc.audioClip3 = (AudioClip)EditorGUILayout.ObjectField(new GUIContent("Audio Clip3", "Audio source for steps"), fpc.audioClip3, typeof(AudioClip), true);
+        fpc.audioClip4 = (AudioClip)EditorGUILayout.ObjectField(new GUIContent("Audio Clip3", "Audio source for game over"), fpc.audioClip4, typeof(AudioClip), true);
         fpc.fov = EditorGUILayout.Slider(new GUIContent("Field of View", "The camera’s view angle. Changes the player camera directly."), fpc.fov, fpc.zoomFOV, 179f);
         fpc.cameraCanMove = EditorGUILayout.ToggleLeft(new GUIContent("Enable Camera Rotation", "Determines if the camera is allowed to move."), fpc.cameraCanMove);
        

@@ -157,6 +157,7 @@ MonoBehaviour:
   audioClip1: {fileID: 8300000, guid: c9a7d7638cd6848b380d9f87eb592c29, type: 3}
   audioClip2: {fileID: 8300000, guid: 7814346d7044a42ffad6e80a071366df, type: 3}
   audioClip3: {fileID: 8300000, guid: e8a7f17825df04f22ae814afea91c39e, type: 3}
+  audioClip4: {fileID: 8300000, guid: 832d9093092a14573ab5fea446cb00ff, type: 3}
   playerCamera: {fileID: 4459864851310106426}
   fov: 60
   invertCamera: 0
