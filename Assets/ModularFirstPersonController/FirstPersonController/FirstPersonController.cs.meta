@@ -11,13 +11,14 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - audioSrc: {instanceID: 0}
+  - audioClip1: {fileID: 8300000, guid: c9a7d7638cd6848b380d9f87eb592c29, type: 3}
+  - audioClip2: {fileID: 8300000, guid: fff80a6589ca844ec81c560a1b8b0078, type: 3}
   - playerCamera: {instanceID: 0}
   - crosshairImage: {instanceID: 0}
   - sprintBarBG: {instanceID: 0}
   - sprintBar: {instanceID: 0}
   - joint: {instanceID: 0}
-  - audioSrc: {fileID: 7710334504309790277, guid: 39669873e351a45099854bb575d130f3, type: 3}
-  - audioClip1: {fileID: 8300000, guid: 34bf32dbfd8be40e78c2fd7c06bca26d, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

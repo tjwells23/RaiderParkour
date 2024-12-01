@@ -18,6 +18,8 @@ public class FirstPersonController : MonoBehaviour
 {
     public AudioSource audioSrc;
     public AudioClip audioClip1;
+    public AudioClip audioClip2;
+    public AudioClip audioClip3;
 
     private Rigidbody rb;
 
@@ -131,6 +133,8 @@ public class FirstPersonController : MonoBehaviour
     // Internal Variables
     private Vector3 jointOriginalPos;
     private float timer = 0;
+
+    private bool walkSoundEnabled = true;
 
     #endregion
 
@@ -471,7 +475,6 @@ public class FirstPersonController : MonoBehaviour
             isGrounded = false;
             audioSrc.clip = audioClip1;
             audioSrc.Play();
-            Debug.Log("dipesh was here");
         }
 
         // When crouched and using toggle system, will uncrouch for a jump
@@ -500,6 +503,8 @@ public class FirstPersonController : MonoBehaviour
             walkSpeed *= speedReduction;
 
             isCrouched = true;
+            audioSrc.clip = audioClip2;
+            audioSrc.Play();
         }
     }
 
@@ -522,8 +527,18 @@ public class FirstPersonController : MonoBehaviour
             {
                 timer += Time.deltaTime * bobSpeed;
             }
+
+            if ((jointOriginalPos.y > (jointOriginalPos.y + Mathf.Sin(timer) * bobAmount.y)) && walkSoundEnabled) {
+                audioSrc.clip = audioClip3;
+                audioSrc.Play();
+                walkSoundEnabled = false;
+            }else if (jointOriginalPos.y < (jointOriginalPos.y + Mathf.Sin(timer) * bobAmount.y)) {
+                walkSoundEnabled = true;
+            }
             // Applies HeadBob movement
             joint.localPosition = new Vector3(jointOriginalPos.x + Mathf.Sin(timer) * bobAmount.x, jointOriginalPos.y + Mathf.Sin(timer) * bobAmount.y, jointOriginalPos.z + Mathf.Sin(timer) * bobAmount.z);
+
+            
         }
         else
         {
@@ -569,7 +584,9 @@ public class FirstPersonController : MonoBehaviour
         
         fpc.playerCamera = (Camera)EditorGUILayout.ObjectField(new GUIContent("Camera", "Camera attached to the controller."), fpc.playerCamera, typeof(Camera), true);
         fpc.audioSrc = (AudioSource)EditorGUILayout.ObjectField(new GUIContent("Audio Source", "Audio source"), fpc.audioSrc, typeof(AudioSource), true);
-        fpc.audioClip1 = (AudioClip)EditorGUILayout.ObjectField(new GUIContent("Audio Clip1", "Audio source"), fpc.audioClip1, typeof(AudioClip), true);
+        fpc.audioClip1 = (AudioClip)EditorGUILayout.ObjectField(new GUIContent("Audio Clip1", "Audio source for jump"), fpc.audioClip1, typeof(AudioClip), true);
+        fpc.audioClip2 = (AudioClip)EditorGUILayout.ObjectField(new GUIContent("Audio Clip2", "Audio source for steps"), fpc.audioClip2, typeof(AudioClip), true);
+        fpc.audioClip3 = (AudioClip)EditorGUILayout.ObjectField(new GUIContent("Audio Clip3", "Audio source for steps"), fpc.audioClip3, typeof(AudioClip), true);
         fpc.fov = EditorGUILayout.Slider(new GUIContent("Field of View", "The camera’s view angle. Changes the player camera directly."), fpc.fov, fpc.zoomFOV, 179f);
         fpc.cameraCanMove = EditorGUILayout.ToggleLeft(new GUIContent("Enable Camera Rotation", "Determines if the camera is allowed to move."), fpc.cameraCanMove);
        

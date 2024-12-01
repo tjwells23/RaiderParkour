@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4459864850019384737}
   - component: {fileID: 4459864850019384741}
   - component: {fileID: 4459864850019384740}
-  - component: {fileID: 8790466492022737590}
+  - component: {fileID: -4759758690757417321}
   m_Layer: 0
   m_Name: FirstPersonController
   m_TagString: Player
@@ -153,8 +153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90ba6530d9bfda47abb4610956b2f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSrc: {fileID: 8790466492022737590}
-  audioClip1: {fileID: 0}
+  audioSrc: {fileID: -4759758690757417321}
+  audioClip1: {fileID: 8300000, guid: c9a7d7638cd6848b380d9f87eb592c29, type: 3}
+  audioClip2: {fileID: 8300000, guid: 7814346d7044a42ffad6e80a071366df, type: 3}
+  audioClip3: {fileID: 8300000, guid: e8a7f17825df04f22ae814afea91c39e, type: 3}
   playerCamera: {fileID: 4459864851310106426}
   fov: 60
   invertCamera: 0
@@ -199,7 +201,7 @@ MonoBehaviour:
   joint: {fileID: 4459864851508666808}
   bobSpeed: 10
   bobAmount: {x: 0, y: 0.1, z: 0}
---- !u!82 &8790466492022737590
+--- !u!82 &-4759758690757417321
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
