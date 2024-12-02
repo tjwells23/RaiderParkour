@@ -8,6 +8,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+
 
 #if UNITY_EDITOR
     using UnityEditor;
@@ -17,6 +19,11 @@ using UnityEngine.UI;
 public class FirstPersonController : MonoBehaviour
 {
     private Rigidbody rb;
+    private Vector3 startPosition; // Starting position for tracking distance
+    private float maxForwardZ = 0; // Tracks the farthest forward progress
+    private bool isTrackingDistance = false; // Flag to ensure tracking starts only once
+    public ScoreManager scoreManager;
+    public resetPlayer resetPlayer;
 
     #region Camera Movement Variables
 
@@ -154,6 +161,7 @@ public class FirstPersonController : MonoBehaviour
         if(lockCursor)
         {
             Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
         if(crosshair)
@@ -326,7 +334,7 @@ public class FirstPersonController : MonoBehaviour
         #region Jump
 
         // Gets input and calls jump method
-        if(enableJump && Input.GetKeyDown(jumpKey) && isGrounded)
+        if(enableJump && playerCanMove && Input.GetKeyDown(jumpKey) && isGrounded)
         {
             Jump();
         }
@@ -337,17 +345,17 @@ public class FirstPersonController : MonoBehaviour
 
         if (enableCrouch)
         {
-            if(Input.GetKeyDown(crouchKey) && !holdToCrouch)
+            if(enableCrouch && playerCanMove && Input.GetKeyDown(crouchKey) && !holdToCrouch)
             {
                 Crouch();
             }
             
-            if(Input.GetKeyDown(crouchKey) && holdToCrouch)
+            if(enableCrouch && playerCanMove && Input.GetKeyDown(crouchKey) && holdToCrouch)
             {
                 isCrouched = false;
                 Crouch();
             }
-            else if(Input.GetKeyUp(crouchKey) && holdToCrouch)
+            else if(enableCrouch && playerCanMove && Input.GetKeyUp(crouchKey) && holdToCrouch)
             {
                 isCrouched = true;
                 Crouch();
@@ -358,9 +366,28 @@ public class FirstPersonController : MonoBehaviour
 
         CheckGround();
 
-        if(enableHeadBob)
+        if(enableHeadBob && playerCanMove)
         {
             HeadBob();
+        }
+
+        if (isTrackingDistance)
+        {
+            // Check the player's current Z position relative to the starting position
+            float currentForwardZ = transform.position.z;
+
+            // If the player has advanced farther than the maxForwardZ, update the score
+            if (currentForwardZ > maxForwardZ)
+            {
+                // Update the maximum forward progress
+                maxForwardZ = currentForwardZ;
+
+                // Calculate the forward distance traveled relative to the starting position
+                float forwardDistance = maxForwardZ - startPosition.z;
+
+                // Update the score
+                ScoreManager.Instance.addScore(Mathf.RoundToInt(forwardDistance));
+            }
         }
     }
 
@@ -524,6 +551,35 @@ public class FirstPersonController : MonoBehaviour
             // Resets when play stops moving
             timer = 0;
             joint.localPosition = new Vector3(Mathf.Lerp(joint.localPosition.x, jointOriginalPos.x, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.y, jointOriginalPos.y, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.z, jointOriginalPos.z, Time.deltaTime * bobSpeed));
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Course1") && !isTrackingDistance)
+        {
+            //Debug.Log("Distance tracking started!");
+
+            // Start tracking distance
+            isTrackingDistance = true;
+            startPosition = transform.position;
+
+            //Debug.Log("Starting position: " + startPosition);
+        }
+
+        if (collision.gameObject.CompareTag("Pit"))
+        {
+            //Debug.Log("You lose!");
+
+            playerCanMove = false;
+            cameraCanMove = false;
+            crosshairObject.gameObject.SetActive(false);
+
+            // Unlock the cursor for UI interaction
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            resetPlayer.Instance.showGameOverScreen();
         }
     }
 }
