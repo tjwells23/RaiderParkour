@@ -41,4 +41,9 @@ public class resetPlayer : MonoBehaviour
     {
         gameOverScreen.SetActive(true);
     }
+
+    public void loadMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
 }
