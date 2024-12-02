@@ -9,8 +9,14 @@ public class Menu : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
     public void OnQuitButton()
     {
         Application.Quit();
+    }
+
+    public void loadPlayerProfile()
+    {
+        SceneManager.LoadScene("Player Profile");
     }
 }
