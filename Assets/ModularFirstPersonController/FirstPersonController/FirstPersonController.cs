@@ -573,6 +573,7 @@ public class FirstPersonController : MonoBehaviour
 
             playerCanMove = false;
             cameraCanMove = false;
+            crosshairObject.gameObject.SetActive(false);
 
             // Unlock the cursor for UI interaction
             Cursor.lockState = CursorLockMode.None;
