@@ -17,6 +17,6 @@ public class Menu : MonoBehaviour
 
     public void loadPlayerProfile()
     {
-        SceneManager.LoadScene("Player Profile");
+        SceneManager.LoadScene("Player Profile Menu");
     }
 }
